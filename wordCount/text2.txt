@@ -1,0 +1,18 @@
+Most  devices  are indicated by a filename (of a block special device), like /dev/sda1, but there are other possibilities.
+For example, in the case of an NFS mount, device may look like knuth.cwi.nl:/dir.  It is also possible to indicate a block
+special  device  using  its  filesystem  label  or UUID (see the -L and -U options below), or its partition label or UUID.
+(Partition identifiers are supported for example for GUID Partition Tables (GPT).)
+
+Don't forget that there is no guarantee that UUIDs and labels are really unique, especially if you move, share or copy the
+device.  Use lsblk -o +UUID,PARTUUID to verify that the UUIDs are really unique in your system.
+
+The recommended setup is to use tags (e.g. LABEL=label) rather than /dev/disk/by-{label,uuid,partuuid,partlabel} udev sym‐
+links in the /etc/fstab file.  Tags are more readable, robust and portable.  The mount(8)  command  internally  uses  udev
+symlinks, so the use of symlinks in /etc/fstab has no advantage over tags.  For more details see libblkid(3).
+
+Note  that mount(8) uses UUIDs as strings.  The UUIDs from the command line or from fstab(5) are not converted to internal
+binary representation.  The string representation of the UUID should be based on lower case characters.
+
+The proc filesystem is not associated with a special device, and when mounting it, an arbitrary keyword, such as proc  can
+be  used  instead  of a device specification.  (The customary choice none is less fortunate: the error message `none busy'
+from umount can be confusing.)

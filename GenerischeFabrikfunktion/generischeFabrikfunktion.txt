@@ -1,0 +1,49 @@
+01 #include <iostream>
+02
+03 using std::forward;
+04
+05 using std::cout;
+06 using std::endl;
+07
+08 template <typename T, typename T1>
+09 T createClassic(const T1& t1){
+10   cout << "const T1& t1" << endl;
+11   return T(t1);
+12 }
+13
+14 template <typename T, typename T1>
+15 T createClassic(T1& t1){
+16   cout << "T1& t1" << endl;
+17   return T(t1);
+18 }
+19
+20
+21 template <typename T, typename T1>
+22 T createNew(T1&& t1){
+23   cout << "T1&& t1" << endl;
+24   return T(forward<T1>(t1));
+25 }
+26
+27 int main(){
+28
+29   cout << endl;
+30
+31   cout << "C++98" << endl;
+32   int six= 6;
+33   cout << "  Rvalue => : " ;
+34   int mySix2= createClassic<int>(6);
+35   cout << "  Lvalue => : ";
+36   int mySix= createClassic<int>(six);
+37
+38   cout << endl;
+39
+40   cout << "C++11" << endl;
+41   int five= 5;
+42   cout << "  Rvalue => : ";
+43   int myFive2= createNew<int>(5);
+44   cout << "  Lvalue => : ";
+45   int myFive= createNew<int>(five);
+46
+47   cout << endl;
+48
+49 }
