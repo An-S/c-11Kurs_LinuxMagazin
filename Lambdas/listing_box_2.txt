@@ -1,0 +1,37 @@
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+
+std::string join(std::vector<std::string>& str, std::string sep=""){
+
+  std::string joinStr="";
+  if (not str.size()) return joinStr;
+  std::for_each(str.begin(),str.end()-1,
+      [&joinStr,sep](std::string v) {joinStr+= v + sep;});
+  joinStr+= str.back();
+  return joinStr;
+
+}
+
+int main(){
+  std::vector<std::string> myVec;
+  std::cout << join(myVec) << std::endl;
+
+  myVec.push_back("One");
+  std::cout << join(myVec) << std::endl;
+
+  myVec.push_back("Two");
+  std::cout << join(myVec) << std::endl;
+
+  myVec.push_back("Three");
+  std::cout << join(myVec,":") << std::endl;
+
+  myVec.push_back("Four");
+  std::cout << join(myVec,"/") << std::endl;
+
+  myVec.push_back("Five");
+  std::cout << join(myVec,"XXX") << std::endl;
+
+  std::cout << std::endl;
+};

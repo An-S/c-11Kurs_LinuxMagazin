@@ -1,0 +1,12 @@
+int sum= 0;
+int prod= 1;
+std::for_each(val.begin(),val.end(),[&](int v){sum+= v; prod*= v; std::cout << sum << " " << prod << std::endl;});
+
+sum= 0;
+prod= 1;
+std::for_each(val.begin(),val.end(),
+              [&](int v){
+                sum+= v;
+                prod*= v;
+                std::cout << sum << " " << prod << std::endl;
+              });

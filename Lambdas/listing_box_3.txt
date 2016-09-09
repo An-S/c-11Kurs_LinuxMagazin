@@ -1,0 +1,40 @@
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <random>
+
+std::function<bool(int)> inRange(int low, int up){
+  return [low,up](int d){return d >= low and d <= up;};
+}
+
+int main(){
+  std::cout << std::boolalpha << std::endl;
+
+  std::cout << "4 inRange(5,10): " << inRange(5,10)(4) << std::endl;
+  auto filt= inRange(5,10);
+  std::cout << "5 inRange(5,10): " << filt(5) << std::endl;
+
+  std::cout << std::endl;
+
+  const int NUM=60;
+  std::random_device seed;
+
+  // generator
+  std::mt19937 engine(seed());
+
+  // distribution
+  std::uniform_int_distribution<int> six(1,6);
+
+  std::vector<int> dice;
+  for ( int i=1; i<= NUM; ++i) dice.push_back(six(engine));
+
+  std::cout << std::count_if(dice.begin(),dice.end(),inRange(6,6)) << " of " << NUM << " inRange(6,6) " << std::endl;
+  std::cout << std::count_if(dice.begin(),dice.end(),inRange(4,6)) << " of " << NUM << " inRange(4,6) " << std::endl;
+
+  // remove all elements for 1 to 4
+  dice.erase(std::remove_if(dice.begin(),dice.end(),inRange(1,4)),dice.end());
+  std::cout << "All numbers 5 and 6: ";
+  for (auto v: dice ) std::cout << v << " ";
+
+  std::cout << "\n\n";
+}
